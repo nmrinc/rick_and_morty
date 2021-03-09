@@ -5,8 +5,7 @@ const INITIAL_STATE = {
   info: null,
   results: null,
   page: 1,
-  error: null,
-  redirect: false
+  error: null
 }
 
 const charactersReducer = (state = INITIAL_STATE, action = {}) => {
@@ -24,7 +23,6 @@ const charactersReducer = (state = INITIAL_STATE, action = {}) => {
         isLoading: false,
         info: action.payload.info,
         results: action.payload.results,
-        redirect: false,
       }
 
     case `${GET_CHARACTERS}_REJECTED`:
@@ -47,7 +45,6 @@ const charactersReducer = (state = INITIAL_STATE, action = {}) => {
         ...state,
         isLoading: false,
         results: action.payload,
-        redirect: true,
       }
 
     default:

@@ -9,7 +9,7 @@ function Modal(props) {
   }
 
   return ReactDOM.createPortal(
-    <div className="Modal">
+    <div className="Modal" onClick={props.onClose}>
       <div className="Modal__container rounded">
         <button onClick={props.onClose} className="Modal__close-button btn btn-success">
           <FontAwesomeIcon icon={faTimes} size="lg" />

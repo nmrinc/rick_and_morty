@@ -7,15 +7,17 @@ import Fatal from '../../components/Fatal';
 import Loader from '../../components/Loader';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { useEffect } from 'react';
 
 const Edit = () => {
 	const characters = useSelector((state) => state.charactersReducer);
 	const dispatch = useDispatch();
-	const { results, isLoading, redirect } = characters;
+	const { results, isLoading } = characters;
 	const { charId } = useParams();
 	const [char, setChar] = useState(
 		results.find((item) => item.id === Number(charId))
 	);
+	const [redirect, setRedirect] = useState(false);
 
 	const handleUpdateChar = (e) => {
 		const updated_char = { ...char, [e.target.name]: e.target.value };
@@ -23,8 +25,13 @@ const Edit = () => {
 	};
 
 	const updateChar = () => {
+		setRedirect(true);
 		dispatch(update_character(char));
 	};
+
+	useEffect(() => {
+		setRedirect(false);
+	}, []);
 
 	if (char === undefined) {
 		return <Fatal error="Character not found" />;
