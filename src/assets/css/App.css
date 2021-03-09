@@ -86,9 +86,11 @@ code {
 .Modal__container {
     position: relative;
     top: 10rem;
-    background-color: #ffffff;
+    background-color: rgb(19, 175, 200);
     padding: 1rem;
-    width: 400px;
+    width: 60%;
+    border: rgb(199, 220, 93) solid 5px;
+    color: rgb(15, 64, 70);
 }
 
 .Modal__close-button {
@@ -96,8 +98,12 @@ code {
     top: 0;
     right: 0;
     border: 0;
-    background-color: #F5F5F5;
-    padding: 0.5rem 1rem;
+    color: white;
+    margin: .2em .2em 0
+}
+
+.Modal__image {
+    border: 3px solid rgb(15, 64, 70);
 }
 
 /* ----MODAL---------------------------- */
