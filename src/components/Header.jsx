@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/images/svg/logo.svg';
 
-const Header = () => {
+const Header = (props) => {
 	return (
-		<div className="row header sticky-top">
-			<div className="col-3">
+		<div className="row justify-content-center align-items-center header sticky-top">
+			<div className={`${props.col_size || 'col'}`}>
 				<Link to="/">
 					<img
 						className="img-fluid header_logo"
