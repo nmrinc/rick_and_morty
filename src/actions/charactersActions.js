@@ -35,18 +35,15 @@ export const get_more_characters = () => async (dispatch, getState) => {
 
 }
 
-export const update_character = (car_id) => async (dispatch, getState) => {
+export const update_character = (updated) => async (dispatch, getState) => {
   dispatch({ type: `${UPDATE_CHARACTER}_PENDING` });
 
-  try {
-    const response = await axios.post(`${globals.api_url}/character/${car_id}`);
+  let { results } = getState().charactersReducer;
+  let index = results.indexOf(results.find(item => item.id === updated.id));
+  let results_updated = [...results];
+  results_updated[index] = updated;
 
-    dispatch({ type: `${UPDATE_CHARACTER}_FULFILLED`, payload: response.data });
-  } catch (e) {
-    dispatch({
-      type: `${UPDATE_CHARACTER}_REJECTED`, payload: e.message
-    });
-  }
+  dispatch({ type: `${UPDATE_CHARACTER}_FULFILLED`, payload: results_updated });
 }
 
 export const delete_character = (index) => async (dispatch) => {

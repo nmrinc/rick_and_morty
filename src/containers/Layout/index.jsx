@@ -51,7 +51,7 @@ const Layout = ({ children }) => {
 			{isLoading ? (
 				<Loader vh="vh85" size="10x" />
 			) : error ? (
-				<Fatal error={characters.error} />
+				<Fatal error={characters.error} vh="vh85" />
 			) : (
 				results && updateChildrenWithProps
 			)}
