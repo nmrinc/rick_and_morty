@@ -65,7 +65,7 @@ const Home = () => {
 									>
 										<FontAwesomeIcon icon={faEye} />
 									</button>
-									<Link to="/edit/:charId">
+									<Link to={`/edit/${col.id}`}>
 										<button type="button" className="btn btn-success">
 											<FontAwesomeIcon icon={faPencilAlt} />
 										</button>
@@ -104,9 +104,7 @@ const Home = () => {
 					style={{ color: 'white', backgroundColor: 'rgba(0,0,0,0.8)' }}
 				>
 					<h4 className="p-0 m-0">
-						To this date, there are{' '}
-						<strong style={{ color: 'rgb(199,220,93)' }}>{info.count}</strong>{' '}
-						characters in the universe.
+						To this date, there are <strong style={{ color: 'rgb(199,220,93)' }}>{info.count}</strong> characters in the universe.
 					</h4>
 				</div>
 			</div>
