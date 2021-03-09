@@ -14,6 +14,7 @@ const Layout = ({ children }) => {
 	const { isLoading, error, results } = characters;
 
 	const [colSize, setColSize] = useState('col-12 col-lg-10');
+	const [sticky, setSticky] = useState('');
 
 	useEffect(() => {
 		dispatch(get_characters());
@@ -33,15 +34,17 @@ const Layout = ({ children }) => {
 		onChange: ({ inView }) => {
 			if (!inView) {
 				setColSize('col-4 col-lg-3');
+				setSticky('sticky-top');
 			} else {
 				setColSize('col-12 col-lg-10');
+				setSticky('');
 			}
 		},
 	});
 
 	return (
 		<div className="container-fluid">
-			<Header col_size={colSize} />
+			<Header col_size={colSize} sticky={sticky} />
 			<div className="row justify-content-end m-0 p-0">
 				<div className="observer col-1" ref={ref} />
 			</div>

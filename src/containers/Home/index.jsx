@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { get_more_characters } from '../../actions/charactersActions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -9,11 +10,14 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import useInView from 'react-cool-inview';
 import Loader from '../../components/Loader';
+import InfoModal from '../../components/InfoModal';
 
 const Home = () => {
 	const characters = useSelector((state) => state.charactersReducer);
 	const dispatch = useDispatch();
 	const { info, results } = characters;
+	const [isOpen, setIsOpen] = useState(false);
+	const [curChar, setCurChar] = useState({});
 
 	const { ref } = useInView({
 		rootMargin: '50px 0px',
@@ -53,15 +57,23 @@ const Home = () => {
 							/>
 							<div className="card-body">
 								<p>{col.name}</p>
-								<button>
-									<FontAwesomeIcon icon={faEye} />
-								</button>
-								<button className="mx-lg-2">
-									<FontAwesomeIcon icon={faPencilAlt} />
-								</button>
-								<button>
-									<FontAwesomeIcon icon={faTrashAlt} />
-								</button>
+								<div className="btn-group" role="group">
+									<button
+										type="button"
+										className="btn btn-success"
+										onClick={() => handleOpenModal(col.id)}
+									>
+										<FontAwesomeIcon icon={faEye} />
+									</button>
+									<Link to="/edit/:charId">
+										<button type="button" className="btn btn-success">
+											<FontAwesomeIcon icon={faPencilAlt} />
+										</button>
+									</Link>
+									<button type="button" className="btn btn-success">
+										<FontAwesomeIcon icon={faTrashAlt} />
+									</button>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -70,6 +82,15 @@ const Home = () => {
 		));
 
 		return cards;
+	};
+
+	const handleOpenModal = (id) => {
+		const char = results.find((item) => item.id === id);
+		setCurChar(char);
+		setIsOpen(true);
+	};
+	const handleCloseModal = () => {
+		setIsOpen(false);
 	};
 
 	return (
@@ -93,6 +114,9 @@ const Home = () => {
 			<div className="mb-5" ref={ref}>
 				<Loader size="lg" />
 			</div>
+			{Object.keys(curChar).length && (
+				<InfoModal isOpen={isOpen} onClose={handleCloseModal} char={curChar} />
+			)}
 		</>
 	);
 };

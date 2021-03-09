@@ -4,7 +4,7 @@ import logo from '../assets/images/svg/logo.svg';
 
 const Header = (props) => {
 	return (
-		<div className="row justify-content-center align-items-center header sticky-top">
+		<div className={`row justify-content-center align-items-center header ${props.sticky}`}>
 			<div className={`${props.col_size || 'col'}`}>
 				<Link to="/">
 					<img
