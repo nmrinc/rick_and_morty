@@ -1,8 +1,10 @@
-import { GET_CHARACTERS } from '../types/charactersTypes';
+import { GET_CHARACTERS, GET_MORE_CHARACTERS } from '../types/charactersTypes';
 
 const INITIAL_STATE = {
   isLoading: false,
-  data: null,
+  info: null,
+  results: null,
+  page: 1,
   error: null
 }
 
@@ -18,7 +20,8 @@ const charactersReducer = (state = INITIAL_STATE, action = {}) => {
       return {
         ...state,
         isLoading: false,
-        data: action.payload
+        info: action.payload.info,
+        results: action.payload.results
       }
 
     case `${GET_CHARACTERS}_REJECTED`:
@@ -26,6 +29,14 @@ const charactersReducer = (state = INITIAL_STATE, action = {}) => {
         ...state,
         isLoading: false,
         error: action.payload
+      }
+
+    case `${GET_MORE_CHARACTERS}_FULFILLED`:
+      return {
+        ...state,
+        isLoading: false,
+        results: action.payload,
+        page: state.page + 1,
       }
 
     default:
