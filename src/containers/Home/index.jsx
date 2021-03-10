@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { get_more_characters, kill_character } from '../../actions/charactersActions';
+import {
+	get_more_characters,
+	kill_character,
+} from '../../actions/charactersActions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faTrashAlt,
@@ -33,17 +36,8 @@ const Home = () => {
 	});
 
 	const createCards = () => {
-		/* const chars = [...results];
-		const divided = [];
-		for (let i = 0; i < chars.length; i += 5) {
-			let chunk = chars.slice(i, i + 5);
-			divided.push(chunk);
-		} */
-
 		const cards = (
-			<div
-				className="row justify-content-start align-items-center my-5"
-			>
+			<div className="row justify-content-start align-items-center my-5">
 				{results.map((col) => (
 					<div className="col-4 col-md-3 rounded my-3" key={col.id}>
 						<div
@@ -70,8 +64,11 @@ const Home = () => {
 											<FontAwesomeIcon icon={faPencilAlt} />
 										</button>
 									</Link>
-									<button type="button" className="btn btn-success"
-										onClick={() => handleOpenKill(col.id)}>
+									<button
+										type="button"
+										className="btn btn-success"
+										onClick={() => handleOpenKill(col.id)}
+									>
 										<FontAwesomeIcon icon={faTrashAlt} />
 									</button>
 								</div>
@@ -105,7 +102,7 @@ const Home = () => {
 
 	const handleKillSwitch = (id) => {
 		dispatch(kill_character(id));
-	}
+	};
 
 	return (
 		<>
@@ -118,8 +115,16 @@ const Home = () => {
 					style={{ color: 'white', backgroundColor: 'rgba(0,0,0,0.8)' }}
 				>
 					<h4 className="p-0 m-0">
-						To this date, there are <strong style={{ color: 'rgb(199,220,93)' }}>{info.count}</strong> characters in the universe.
+						To this date, there are{' '}
+						<strong style={{ color: 'rgb(199,220,93)' }}>{info.count}</strong>{' '}
+						characters in the universe.
 					</h4>
+				</div>
+				<div className="w-100"></div>
+				<div className="col text-center py-1">
+					<Link to={`/create`}>
+						<button className="btn btn-info">Add character</button>
+					</Link>
 				</div>
 			</div>
 			{createCards()}
@@ -127,9 +132,18 @@ const Home = () => {
 				<Loader size="lg" />
 			</div>
 			{Object.keys(curChar).length && (
-				<InfoModal isOpen={infoOpen} onClose={handleCloseModal} char={curChar} />
+				<InfoModal
+					isOpen={infoOpen}
+					onClose={handleCloseModal}
+					char={curChar}
+				/>
 			)}
-			<KillModal isOpen={killOpen} onClose={handleCloseModal} char={curChar} killSwitch={handleKillSwitch} />
+			<KillModal
+				isOpen={killOpen}
+				onClose={handleCloseModal}
+				char={curChar}
+				killSwitch={handleKillSwitch}
+			/>
 		</>
 	);
 };

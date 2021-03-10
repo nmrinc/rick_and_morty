@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { get_characters } from '../../actions/charactersActions';
-import useInView from 'react-cool-inview';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Loader from '../../components/Loader';
@@ -12,9 +11,6 @@ const Layout = ({ children }) => {
 	const dispatch = useDispatch();
 
 	const { isLoading, error, results } = characters;
-
-	const [colSize, setColSize] = useState('col-12 col-lg-10');
-	const [sticky, setSticky] = useState('');
 
 	useEffect(() => {
 		dispatch(get_characters());
@@ -30,24 +26,9 @@ const Layout = ({ children }) => {
 		);
 	});
 
-	const { ref } = useInView({
-		onChange: ({ inView }) => {
-			if (!inView) {
-				setColSize('col-4 col-lg-3');
-				setSticky('sticky-top');
-			} else {
-				setColSize('col-12 col-lg-10');
-				setSticky('');
-			}
-		},
-	});
-
 	return (
 		<div className="container-fluid">
-			<Header col_size={colSize} sticky={sticky} />
-			<div className="row justify-content-end m-0 p-0">
-				<div className="observer col-1" ref={ref} />
-			</div>
+			<Header />
 			{isLoading ? (
 				<Loader vh="vh85" size="10x" />
 			) : error ? (
