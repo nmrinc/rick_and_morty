@@ -13,7 +13,7 @@ const KillModal = ({ isOpen, onClose, char, killSwitch }) => (
 			</div>
 			<div className="col-12 col-md-6 pt-3 pt-md-4">
 				<h3>
-					<b>{char.name}</b>
+					<b>Kill {char.name}</b>
 				</h3>
 				<h2>Are you sure?!</h2>
 				<button type="button" className="btn btn-danger" onClick={() => { killSwitch(char.id); onClose(); }}>Kill it</button>

@@ -5,6 +5,7 @@ import './assets/css/App.css';
 import Layout from './containers/Layout';
 import Home from './containers/Home';
 import Edit from './containers/Edit';
+import Create from './containers/Create';
 import NotFound from './components/NotFound';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/edit/:charId" component={Edit} />
+          <Route exact path="/create" component={Create} />
           <Route component={NotFound} />
         </Switch>
       </Layout>

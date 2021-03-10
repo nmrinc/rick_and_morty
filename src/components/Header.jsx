@@ -4,8 +4,8 @@ import logo from '../assets/images/svg/logo.svg';
 
 const Header = (props) => {
 	return (
-		<div className={`row justify-content-center align-items-center header ${props.sticky}`}>
-			<div className={`${props.col_size || 'col'}`}>
+		<div className='row justify-content-center align-items-center header'>
+			<div className='col-12 col-lg-10'>
 				<Link to="/">
 					<img
 						className="img-fluid header_logo"
