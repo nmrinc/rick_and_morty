@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { get_more_characters } from '../../actions/charactersActions';
+import { get_more_characters, kill_character } from '../../actions/charactersActions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faTrashAlt,
@@ -11,12 +11,14 @@ import {
 import useInView from 'react-cool-inview';
 import Loader from '../../components/Loader';
 import InfoModal from '../../components/InfoModal';
+import KillModal from '../../components/KillModal';
 
 const Home = () => {
 	const characters = useSelector((state) => state.charactersReducer);
 	const dispatch = useDispatch();
 	const { info, results } = characters;
-	const [isOpen, setIsOpen] = useState(false);
+	const [infoOpen, setInfoOpen] = useState(false);
+	const [killOpen, setKillOpen] = useState(false);
 	const [curChar, setCurChar] = useState({});
 
 	const { ref } = useInView({
@@ -31,21 +33,19 @@ const Home = () => {
 	});
 
 	const createCards = () => {
-		const chars = [...results];
+		/* const chars = [...results];
 		const divided = [];
-
 		for (let i = 0; i < chars.length; i += 5) {
 			let chunk = chars.slice(i, i + 5);
 			divided.push(chunk);
-		}
+		} */
 
-		const cards = divided.map((row, i) => (
+		const cards = (
 			<div
-				className="row justify-content-center align-items-center my-5"
-				key={i}
+				className="row justify-content-start align-items-center my-5"
 			>
-				{row.map((col) => (
-					<div className="col rounded" key={col.id}>
+				{results.map((col) => (
+					<div className="col-4 col-md-3 rounded my-3" key={col.id}>
 						<div
 							className="card"
 							style={{ backgroundColor: 'rgb(32, 35, 41)', color: 'white' }}
@@ -61,7 +61,7 @@ const Home = () => {
 									<button
 										type="button"
 										className="btn btn-success"
-										onClick={() => handleOpenModal(col.id)}
+										onClick={() => handleOpenInfo(col.id)}
 									>
 										<FontAwesomeIcon icon={faEye} />
 									</button>
@@ -70,7 +70,8 @@ const Home = () => {
 											<FontAwesomeIcon icon={faPencilAlt} />
 										</button>
 									</Link>
-									<button type="button" className="btn btn-success">
+									<button type="button" className="btn btn-success"
+										onClick={() => handleOpenKill(col.id)}>
 										<FontAwesomeIcon icon={faTrashAlt} />
 									</button>
 								</div>
@@ -79,19 +80,32 @@ const Home = () => {
 					</div>
 				))}
 			</div>
-		));
+		);
 
 		return cards;
 	};
 
-	const handleOpenModal = (id) => {
+	const handleOpenInfo = (id) => {
 		const char = results.find((item) => item.id === id);
 		setCurChar(char);
-		setIsOpen(true);
+		console.log(curChar);
+		setInfoOpen(true);
 	};
+
+	const handleOpenKill = (id) => {
+		const char = results.find((item) => item.id === id);
+		setCurChar(char);
+		setKillOpen(true);
+	};
+
 	const handleCloseModal = () => {
-		setIsOpen(false);
+		setInfoOpen(false);
+		setKillOpen(false);
 	};
+
+	const handleKillSwitch = (id) => {
+		dispatch(kill_character(id));
+	}
 
 	return (
 		<>
@@ -113,8 +127,9 @@ const Home = () => {
 				<Loader size="lg" />
 			</div>
 			{Object.keys(curChar).length && (
-				<InfoModal isOpen={isOpen} onClose={handleCloseModal} char={curChar} />
+				<InfoModal isOpen={infoOpen} onClose={handleCloseModal} char={curChar} />
 			)}
+			<KillModal isOpen={killOpen} onClose={handleCloseModal} char={curChar} killSwitch={handleKillSwitch} />
 		</>
 	);
 };

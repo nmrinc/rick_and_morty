@@ -1,4 +1,4 @@
-import { GET_CHARACTERS, GET_MORE_CHARACTERS, UPDATE_CHARACTER } from '../types/charactersTypes';
+import { GET_CHARACTERS, GET_MORE_CHARACTERS, UPDATE_CHARACTER, KILL_CHARACTER } from '../types/charactersTypes';
 
 const INITIAL_STATE = {
   isLoading: false,
@@ -10,8 +10,9 @@ const INITIAL_STATE = {
 
 const charactersReducer = (state = INITIAL_STATE, action = {}) => {
   switch (action.type) {
-    case `${UPDATE_CHARACTER}_PENDING`:
     case `${GET_CHARACTERS}_PENDING`:
+    case `${UPDATE_CHARACTER}_PENDING`:
+    case `${KILL_CHARACTER}_PENDING`:
       return {
         ...state,
         isLoading: true,
@@ -23,6 +24,7 @@ const charactersReducer = (state = INITIAL_STATE, action = {}) => {
         isLoading: false,
         info: action.payload.info,
         results: action.payload.results,
+        page: state.page + 1,
       }
 
     case `${GET_CHARACTERS}_REJECTED`:
@@ -40,6 +42,7 @@ const charactersReducer = (state = INITIAL_STATE, action = {}) => {
         page: state.page + 1,
       }
 
+    case `${KILL_CHARACTER}_FULFILLED`:
     case `${UPDATE_CHARACTER}_FULFILLED`:
       return {
         ...state,

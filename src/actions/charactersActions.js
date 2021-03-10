@@ -1,4 +1,4 @@
-import { GET_CHARACTERS, GET_MORE_CHARACTERS, UPDATE_CHARACTER, REMOVE_CHARACTER } from '../types/charactersTypes';
+import { GET_CHARACTERS, GET_MORE_CHARACTERS, UPDATE_CHARACTER, KILL_CHARACTER } from '../types/charactersTypes';
 import axios from 'axios';
 import globals from '../configs/globals';
 
@@ -46,10 +46,13 @@ export const update_character = (updated) => async (dispatch, getState) => {
   dispatch({ type: `${UPDATE_CHARACTER}_FULFILLED`, payload: results_updated });
 }
 
-export const delete_character = (index) => async (dispatch) => {
-  dispatch({ type: `${REMOVE_CHARACTER}_PENDING` });
+export const kill_character = (id) => async (dispatch, getState) => {
+  dispatch({ type: `${KILL_CHARACTER}_PENDING` });
 
-  console.log('====================================');
-  console.log(index);
-  console.log('====================================');
+  let { results } = getState().charactersReducer;
+  let index = results.indexOf(results.find(item => item.id === id));
+  let results_updated = [...results];
+  results_updated.splice(index, 1);
+
+  dispatch({ type: `${KILL_CHARACTER}_FULFILLED`, payload: results_updated });
 }
