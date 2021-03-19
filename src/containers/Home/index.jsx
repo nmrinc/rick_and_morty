@@ -117,7 +117,7 @@ const Home = () => {
 					<h4 className="p-0 m-0">
 						To this date, there are{' '}
 						<strong style={{ color: 'rgb(199,220,93)' }}>{info.count}</strong>{' '}
-						characters in the universe.
+						characters in all universes.
 					</h4>
 				</div>
 				<div className="w-100"></div>
